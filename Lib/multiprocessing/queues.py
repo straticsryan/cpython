@@ -99,7 +99,7 @@ class Queue(object):
             if not self._rlock.acquire(block, timeout):
                 raise Empty
             try:
-                if block:
+                if block and timeout > 0:
                     timeout = deadline - time.time()
                     if timeout < 0 or not self._poll(timeout):
                         raise Empty
