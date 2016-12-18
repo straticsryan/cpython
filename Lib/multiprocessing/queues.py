@@ -103,6 +103,8 @@ class Queue(object):
                     timeout = deadline - time.time()
                     if timeout < 0 or not self._poll(timeout):
                         raise Empty
+                elif block and timeout < 0:
+                    raise ValueError("'timeout' must be a non-negative number")
                 elif not self._poll():
                     raise Empty
                 res = self._recv_bytes()
